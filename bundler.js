@@ -22,7 +22,7 @@ export const createAsset = (filename) => {
   const id = ID++;
 
   const { code } = transformFromAst(ast, null, {
-    presets: ['env'],
+    presets: ['@babel/preset-env'],
   });
 
   return {
