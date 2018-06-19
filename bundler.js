@@ -6,7 +6,7 @@ const traverse = require('@babel/traverse').default;
 
 let ID = 0;
 
-function createAsset(filename) {
+export const createAsset = (filename) => {
   const content = readFileSync(filename, 'utf-8');
 
   const ast = parse(content, { sourceType: 'module' });
@@ -31,6 +31,4 @@ function createAsset(filename) {
     dependencies,
     code,
   };
-}
-
-createAsset('./example/entry.js');
+};
