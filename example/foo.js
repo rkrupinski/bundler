@@ -1,1 +1,3 @@
-export const foo = 'bar';
+import { bar } from './bar';
+
+export { bar as foo }

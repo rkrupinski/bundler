@@ -1,3 +1,6 @@
 # bundler
 
-Based on https://github.com/ronami/minipack
+Basically [minipack](https://github.com/ronami/minipack), but with:
+
+* quasi-node module resolution
+* more to come...

@@ -1,34 +1,30 @@
-const { readFileSync } = require('fs');
-const { dirname, join } = require('path');
-const { parse } = require('@babel/parser');
-const { transformFromAst } = require('@babel/core');
-const traverse = require('@babel/traverse').default;
-
-let ID = 0;
-
-export const createAsset = (filename) => {
-  const content = readFileSync(filename, 'utf-8');
-
-  const ast = parse(content, { sourceType: 'module' });
-
-  const dependencies = [];
-
-  traverse(ast, {
-    ImportDeclaration: ({ node }) => {
-      dependencies.push(node.source.value);
+const bundle = (graph) => {
+  const modules = graph.reduce((acc, mod) => acc + `${mod.id}: [
+    function (require, module, exports) {
+      ${mod.code}
     },
-  });
+    ${JSON.stringify(mod.mapping)},
+  ],`, '');
 
-  const id = ID++;
+  return `
+    (function(modules) {
+      function require(id) {
+        const [fn, mapping] = modules[id];
 
-  const { code } = transformFromAst(ast, null, {
-    presets: ['@babel/preset-env'],
-  });
+        function localRequire(name) {
+          return require(mapping[name]);
+        }
 
-  return {
-    id,
-    filename,
-    dependencies,
-    code,
-  };
-};
+        const module = { exports : {} };
+
+        fn(localRequire, module, module.exports);
+
+        return module.exports;
+      }
+
+      require(0);
+    }({${modules}}));
+  `;
+}
+
+export default bundle;

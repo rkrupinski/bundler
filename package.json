@@ -1,8 +1,8 @@
 {
   "name": "bundler",
   "version": "0.0.0",
-  "main": "bundler.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "start": "babel-node test.js"
   },
@@ -11,6 +11,10 @@
     "@babel/node": "^7.0.0-beta.51",
     "@babel/parser": "^7.0.0-beta.51",
     "@babel/preset-env": "^7.0.0-beta.51",
-    "@babel/traverse": "^7.0.0-beta.51"
+    "@babel/traverse": "^7.0.0-beta.51",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2"
+  },
+  "dependencies": {
+    "isitfriday": "^1.0.3"
   }
 }

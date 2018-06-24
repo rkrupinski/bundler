@@ -1,3 +1,6 @@
+import isitfriday from 'isitfriday';
 import { foo } from './foo';
 
-alert(foo);
+if (isitfriday()) {
+  alert(foo);
+}
